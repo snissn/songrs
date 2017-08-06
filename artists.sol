@@ -1,7 +1,7 @@
 pragma solidity ^0.4.14;
 
 contract Song{
-    
+
     string ipfs;
     string name;
     address artist;
@@ -13,7 +13,7 @@ contract Song{
 }
 
 contract Album{
-    
+
     Song[]  songs;
     string public name;
     address artist;
@@ -25,18 +25,19 @@ contract Album{
     }
 }
 contract Artists {
-    
-    event NewArtistEvent(bytes32 username, string ipfs);
-    event NewSongEvent(bytes32 artist_username, string artist_ipfs, string song_name, string song_ipfs);
-    event NewAlbumEvent(bytes32 artist_username, string artist_ipfs, string album_name);
 
-    
+    event NewArtistEvent(bytes32 username, string ipfs, address sender);
+    event NewSongEvent(bytes32 artist_username, string artist_ipfs, string song_name, string song_ipfs, address sender);
+    event NewAlbumEvent(bytes32 artist_username, string artist_ipfs, string album_name, address sender);
+
+
     struct Artist {
         string ipfs;
         bytes32 name;   // short name (up to 32 bytes)
         address[] albums;
         address[] singles;
     }
+    //single
 
     mapping(address => Artist) public artists;
     mapping(bytes32 => address) public reserved_names;
@@ -46,34 +47,34 @@ contract Artists {
        address[] storage singles;
        artists[msg.sender] = Artist({ipfs:ipfs, name:username, albums:albums,singles:singles});
        reserved_names[username] = msg.sender;
-      
-       NewArtistEvent(username, ipfs);
+
+       NewArtistEvent(username, ipfs, msg.sender);
 
     }
-    
+
     function create_album(string name) returns (address){
         address album = address(new Album(name));
         artists[msg.sender].albums.push(album);
         Artist artist = artists[msg.sender];
-        NewAlbumEvent(artist.name, artist.ipfs, name);
+        NewAlbumEvent(artist.name, artist.ipfs, name, msg.sender);
         return album;
     }
-    
-    
+
+
     function add_song_to_album(address album_address, address song_address){
         Album album = Album(album_address);
         Song song = Song(song_address);
         album.add_song(song);
     }
-    
+
     function create_single(string name, string ipfs)  returns (address){
         //songs_mapping[msg.sender].push(Song({ipfs:ipfs, name:name}));
         address song = address(new Song(ipfs,name, msg.sender));
         artists[msg.sender].singles.push(song);
         Artist artist = artists[msg.sender];
-        NewSongEvent(artist.name, artist.ipfs, name, ipfs);
+        NewSongEvent(artist.name, artist.ipfs, name, ipfs, msg.sender);
         return song;
-        
+
     }
 
     function get_ipfs(bytes32 name ) constant returns ( string) {
