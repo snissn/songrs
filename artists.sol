@@ -14,11 +14,14 @@ contract Song{
 
 contract Album{
 
-    Song[] public songs;
+    Song[]  songs;
     string public name;
     address artist;
     function Album(string _name){
         name = _name;
+    }
+    function add_song(Song song){
+        songs.push(song);
     }
 }
 contract Artists {
@@ -54,6 +57,13 @@ contract Artists {
         Artist artist = artists[msg.sender];
         NewAlbumEvent(artist.name, artist.ipfs, name);
         return album;
+    }
+
+
+    function add_song_to_album(address album_address, address song_address){
+        Album album = Album(album_address);
+        Song song = Song(song_address);
+        album.add_song(song);
     }
 
     function create_single(string name, string ipfs)  returns (address){
