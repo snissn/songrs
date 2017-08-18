@@ -1,10 +1,5 @@
 pragma solidity ^0.4.14;
 
-//#ujo
-//consensys
-//truebit
-//yondon@livepeer.org
-
 contract Song{
 
     string ipfs;
@@ -34,7 +29,7 @@ contract Artists {
     event NewArtistEvent(bytes32 username, string ipfs, address sender);
     event NewSongEvent(bytes32 artist_username, string artist_ipfs, string song_name, string song_ipfs, address sender);
     event NewAlbumEvent(bytes32 artist_username, string artist_ipfs, string album_name, address sender);
-
+    int public  artist_length;
 
     struct Artist {
         string ipfs;
@@ -46,12 +41,18 @@ contract Artists {
 
     mapping(address => Artist) public artists;
     mapping(bytes32 => address) public reserved_names;
+    address[] artists_list;
 
     function create_artist(bytes32 username, string ipfs) {
        address[] storage albums;
        address[] storage singles;
+
+       //todo throw exception if artists already exists
+
        artists[msg.sender] = Artist({ipfs:ipfs, name:username, albums:albums,singles:singles});
        reserved_names[username] = msg.sender;
+       artist_length +=1 ;
+       artists_list.push(msg.sender);
 
        NewArtistEvent(username, ipfs, msg.sender);
 
@@ -82,8 +83,8 @@ contract Artists {
 
     }
 
-    function get_artist_count() constant returns ( integer) {
-      return artists.length;
+    function get_artist(uint index) constant returns (address) {
+      return artists_list[index];
     }
     function get_ipfs(bytes32 name ) constant returns ( string) {
         return artists[reserved_names[name]].ipfs;
@@ -93,4 +94,5 @@ contract Artists {
     }
 
 }
+
 
