@@ -1,0 +1,14 @@
+<script type="text/javascript">
+function app(){
+  window.songrs = true;
+var abi = [{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"artists","outputs":[{"name":"ipfs","type":"string"},{"name":"name","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"album_address","type":"address"},{"name":"song_address","type":"address"}],"name":"add_song_to_album","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"name","type":"string"},{"name":"ipfs","type":"string"}],"name":"create_single","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"username","type":"bytes32"},{"name":"ipfs","type":"string"}],"name":"create_artist","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"artist_length","outputs":[{"name":"","type":"int256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"ipfs","type":"string"}],"name":"set_ipfs","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"reserved_names","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"index","type":"uint256"}],"name":"get_artist","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"name","type":"string"}],"name":"create_album","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"name","type":"bytes32"}],"name":"get_ipfs","outputs":[{"name":"","type":"string"}],"payable":false,"type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"username","type":"bytes32"},{"indexed":false,"name":"ipfs","type":"string"},{"indexed":false,"name":"sender","type":"address"}],"name":"NewArtistEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"artist_username","type":"bytes32"},{"indexed":false,"name":"artist_ipfs","type":"string"},{"indexed":false,"name":"song_name","type":"string"},{"indexed":false,"name":"song_ipfs","type":"string"},{"indexed":false,"name":"sender","type":"address"}],"name":"NewSongEvent","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"artist_username","type":"bytes32"},{"indexed":false,"name":"artist_ipfs","type":"string"},{"indexed":false,"name":"album_name","type":"string"},{"indexed":false,"name":"sender","type":"address"}],"name":"NewAlbumEvent","type":"event"}]
+
+
+
+var contract = web3.eth.contract(abi);
+window.songrs = contract.at("0xb96e949dc515bfa897564f247537a26e66d185f4437cffdd6552ed0dd475d6a6");
+}
+
+setTimeout(1000, app);
+// app isn't initially available at page load, is there a call back for metamask injection?
+</script>

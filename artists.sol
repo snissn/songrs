@@ -1,5 +1,10 @@
 pragma solidity ^0.4.14;
 
+//#ujo
+//consensys
+//truebit
+//yondon@livepeer.org
+
 contract Song{
 
     string ipfs;
@@ -77,6 +82,9 @@ contract Artists {
 
     }
 
+    function get_artist_count() constant returns ( integer) {
+      return artists.length;
+    }
     function get_ipfs(bytes32 name ) constant returns ( string) {
         return artists[reserved_names[name]].ipfs;
     }
