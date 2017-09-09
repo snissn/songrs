@@ -43,6 +43,10 @@ contract Artists {
     mapping(bytes32 => address) public reserved_names;
     address[] artists_list;
 
+    function get_name() returns (string) {
+      return "hi from the blockchain";
+    }
+
     function create_artist(bytes32 username, string ipfs) {
        address[] storage albums;
        address[] storage singles;
