@@ -47,6 +47,15 @@ contract Artists {
       return "hi from the blockchain";
     }
 
+    function get_artist_length() returns (int i)  {
+      return artist_length;
+    }
+
+    function get_artist_name(uint256 i) returns (bytes32) {
+      return artists[artists_list[i]].name;
+    }
+
+
     function create_artist(bytes32 username, string ipfs) {
        address[] storage albums;
        address[] storage singles;

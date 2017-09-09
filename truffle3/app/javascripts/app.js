@@ -58,30 +58,33 @@ window.App = {
     }).then(function(value) {
       var balance_element = document.getElementById("balance");
       balance_element.innerHTML = value.valueOf();
+      return meta.get_artist_length.call({from: account});
+    }).then(function(value){
+      var balance_element = document.getElementById("total");
+      balance_element.innerHTML = value.valueOf();
     }).catch(function(e) {
       console.log(e);
       self.setStatus("Error getting balance; see log.");
     });
   },
 
-  sendCoin: function() {
+  SignUp: function() {
     var self = this;
 
-    var amount = parseInt(document.getElementById("amount").value);
-    var receiver = document.getElementById("receiver").value;
+    var name = document.getElementById("name").value;
 
     this.setStatus("Initiating transaction... (please wait)");
 
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    Artists.deployed().then(function(instance) {
       meta = instance;
-      return meta.sendCoin(receiver, amount, {from: account});
+      return meta.create_artist(name, "ipfs", {from: account});
     }).then(function() {
-      self.setStatus("Transaction complete!");
+      self.setStatus("Your Band " + name + " has been created!");
       self.refreshBalance();
     }).catch(function(e) {
       console.log(e);
-      self.setStatus("Error sending coin; see log.");
+      self.setStatus("Error creating your band; see the log.");
     });
   }
 };
