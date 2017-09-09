@@ -52,7 +52,7 @@ window.App = {
     var self = this;
 
     var meta;
-    MetaCoin.deployed().then(function(instance) {
+    Artists.deployed().then(function(instance) {
       meta = instance;
       return meta.get_name.call({from: account});
     }).then(function(value) {
